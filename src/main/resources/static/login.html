@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login</title>
+    <link href="styles.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<!--<form method="post" th:action="@{/perform_login}" th:object="${user}">-->
+
+<form method="post" th:action="@{/perform_login}" th:object="${user}">
+
+    <!--    <form method="post"  th:object="${user}">-->
+    <h2>Passport Application</h2>
+    <div>
+        <label for="username">Username:</label>
+        <input id="username" name="username" pattern="^PASS-\d{4}$" required th:field="*{username}"
+               title="Invalid username. It must follow the format PASS-XXXX, where XXXX are 4 digits."
+               type="text">
+        <div class="error" th:errors="*{username}" th:if="${#fields.hasErrors('username')}"></div>
+    </div>
+    <div>
+        <label for="password">Password:</label>
+        <input id="password" name="password" required type="password"/>
+        <!--        -->
+        <!--        <input id="password" name="password" required th:field="*{password}" type="password" pattern="^[a-zA-Z0-9]*#.*$"-->
+        <!--               title="Invalid password. It must contain alphanumeric characters and at least one '#'."/>-->
+        <!--        <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error"></div>-->
+    </div>
+    <div>
+        <button type="submit">Login</button>
+
+        <!--        <button  formaction="/passport-application/showForm" type="submit">Login</button>-->
+        <button type="reset">Reset</button>
+
+    </div>
+    <p>
+        Don't have an account? <a th:href="@{/register}">Register here</a>
+    </p>
+</form>
+</body>
+</html>

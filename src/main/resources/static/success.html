@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Application Success</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+<form method="post" th:action="@{/logout}">
+    <h2>Application Successful</h2>
+    <p>Need the temporary number while giving payment? Please note down your <span th:text="${temporaryId}"></span></p>
+    <div>
+        <button type="submit">Logout</button>
+    </div>
+</form>
+</body>
+</html>
+

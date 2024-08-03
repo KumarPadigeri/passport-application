@@ -1,0 +1,118 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <title>User Registration</title>-->
+<!--    <link href="styles.css" rel="stylesheet" type="text/css">-->
+<!--    <script>-->
+<!--        function validatePasswords() {-->
+<!--            const password = document.getElementById("password").value;-->
+<!--            const confirmPassword = document.getElementById("confirmPassword").value;-->
+<!--            const confirmPasswordError = document.getElementById("confirmPasswordError");-->
+
+<!--            if (password !== confirmPassword) {-->
+<!--                confirmPasswordError.textContent = "Passwords do not match.";-->
+<!--                return false;-->
+<!--            } else {-->
+<!--                confirmPasswordError.textContent = "";-->
+<!--                return true;-->
+<!--            }-->
+<!--        }-->
+<!--    </script>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--<form method="post" th:action="@{/register}" th:object="${user}">-->
+<!--    <h2>User Registration</h2>-->
+<!--    <div>-->
+<!--        <label for="username">Username:</label>-->
+<!--        <input id="username" required th:field="*{username}" type="text" pattern="^PASS-\d{4}$"-->
+<!--               title="Invalid username. It must follow the format PASS-XXXX, where XXXX are 4 digits.">-->
+<!--        <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="error"></div>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--        <label for="password">Password:</label>-->
+<!--        <input id="password" name="password" required th:field="*{password}" type="password" pattern="^[a-zA-Z0-9]*#.*$"-->
+<!--               title="Invalid password. It must contain alphanumeric characters and at least one '#'."/>-->
+<!--        <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error"></div>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--        <label for="confirmPassword">Confirm Password:</label>-->
+<!--        <input id="confirmPassword" required th:field="*{confirmPassword}" type="password"/>-->
+<!--        <div id="confirmPasswordError" class="error"></div>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--        <label for="email">Email:</label>-->
+<!--        <input id="email" required th:field="*{email}" type="email"/>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--        <button type="submit">Register</button>-->
+<!--    </div>-->
+<!--    <p>-->
+<!--        Already have an account? <a th:href="@{/login}">Login here</a>-->
+<!--    </p>-->
+<!--</form>-->
+
+<!--</body>-->
+<!--</html>-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User Registration</title>
+    <link href="styles.css" rel="stylesheet" type="text/css">
+    <script>
+        function validatePasswords(event) {
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
+            const confirmPasswordError = document.getElementById("confirmPasswordError");
+
+            if (password !== confirmPassword) {
+                confirmPasswordError.textContent = "Passwords do not match.";
+                event.preventDefault();
+            } else {
+                confirmPasswordError.textContent = "";
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.querySelector('form');
+            form.addEventListener('submit', validatePasswords);
+        });
+    </script>
+</head>
+<body>
+
+<form method="post" th:action="@{/register}" th:object="${user}">
+    <h2>User Registration</h2>
+    <div>
+        <label for="username">Username:</label>
+        <input id="username" pattern="^PASS-\d{4}$" required th:field="*{username}"
+               title="Invalid username. It must follow the format PASS-XXXX, where XXXX are 4 digits."
+               type="text">
+        <div class="error" th:errors="*{username}" th:if="${#fields.hasErrors('username')}"></div>
+    </div>
+    <div>
+        <label for="password">Password:</label>
+        <input id="password" name="password" pattern="^[a-zA-Z0-9]*#.*$" required th:field="*{password}"
+               title="Invalid password. It must contain alphanumeric characters and at least one '#'."
+               type="password"/>
+        <div class="error" th:errors="*{password}" th:if="${#fields.hasErrors('password')}"></div>
+    </div>
+    <div>
+        <label for="confirmPassword">Confirm Password:</label>
+        <input id="confirmPassword" required th:field="*{confirmPassword}" type="password"/>
+        <div class="error" id="confirmPasswordError"></div>
+    </div>
+    <div>
+        <label for="email">Email:</label>
+        <input id="email" required th:field="*{email}" type="email"/>
+    </div>
+    <div>
+        <button type="submit">Register</button>
+    </div>
+    <p>
+        Already have an account? <a th:href="@{/login}">Login here</a>
+    </p>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,76 @@
+spring:
+  thymeleaf:
+    prefix: classpath:/static/
+    suffix: .html
+    enabled: true
+  datasource:
+    username: root
+    password: T4896s00
+    url: jdbc:mysql://localhost:3306/PASSPORT_APPLICATION
+  jpa:
+    open-in-view: false
+    show-sql: true
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+      ddl-auto: update
+    properties:
+      hibernate:
+        bytecode:
+          use_reflection_optimizer: false
+        provider: org.hibernate.bytecode.internal.none.None
+        generate_statistics: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
+  application:
+    name: passport-application
+logging:
+  level:
+    org:
+      springframework: DEBUG
+      hibernate:
+        stat: DEBUG
+    org.springframework.security: DEBUG
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*, openapi, swagger-ui'
+      base-path: /management
+server:
+  port: 8081
+  servlet:
+    contextPath: /passport-application
+springdoc:
+  show-actuator: true
+  swagger-ui:
+    path: /documentation
+    enabled: true
+  api-docs:
+    path: /api-docs
+    enabled: true
+  group-configs:
+    - group: Testing APIs
+      paths-to-match: /test/**
+    - group: Admin Management
+      paths-to-match: /management/**
+    - group: Animal APIs
+      paths-to-match: /pet/**
+    - group: Passport APP APIs
+      paths-to-match: /passport-application/**
+application:
+  auth:
+    roles:
+      USER:
+        username: APIUSER
+        password: APIPWD
+      ADMIN:
+        username: APIADMIN
+        password: ADMINPWD
+
+
+#http://localhost:8081/springboot-aws-services/documentation
+#http://localhost:8081/springboot-aws-services/swagger-ui/index.html

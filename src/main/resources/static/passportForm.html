@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Passport Application Form</title>
+    <link rel="stylesheet" th:href="@{/styles.css}" type="text/css">
+    <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+</head>
+<body>
+
+<form method="post" th:action="@{/updateCities}" th:object="${passportForm}">
+    <h1>Passport Application Form</h1>
+    <div>
+        <label for="userId">Name:</label>
+        <input id="userId" required th:field="*{userId}" type="text">
+    </div>
+    <div>
+        <label for="country">Country:</label>
+        <input id="country" readonly th:field="*{country}" type="text" value="India">
+    </div>
+    <div>
+        <label for="state">State:</label>
+        <select id="state" name="state" onchange="this.form.submit()" required th:field="*{state}">
+            <option th:each="state : ${states}" th:selected="${passportForm.state == state}" th:text="${state}"
+                    th:value="${state}">State
+            </option>
+        </select>
+    </div>
+    <div>
+        <label for="city">City:</label>
+        <select id="city" required th:field="*{city}">
+            <option th:each="city : ${cities}" th:text="${city}" th:value="${city}">City</option>
+        </select>
+    </div>
+
+    <div>
+        <label for="pin">Pincode:</label>
+        <input id="pin" name="pin" pattern="\d{6}" required th:field="*{pin}" title="Pincode must be exactly 6 digits"
+               type="text">
+        <div class="error" th:errors="*{pin}" th:if="${#fields.hasErrors('pin')}"></div>
+    </div>
+
+    <div>
+        <label for="applicationType">Application Type:</label>
+        <input id="applicationType" required th:field="*{applicationType}" type="text">
+    </div>
+    <div>
+        <label for="bookletType">Booklet Type:</label>
+        <select id="bookletType" required th:field="*{bookletType}">
+            <option value="30 Pages">30 Pages</option>
+            <option value="60 Pages">60 Pages</option>
+        </select>
+    </div>
+    <div>
+        <label for="issueDate">Issue Date:</label>
+        <input id="issueDate" placeholder="dd-mon-yy" required th:field="*{issueDate}" type="text">
+    </div>
+    <div>
+        <button formaction="/passport-application/submitPassportApplication" type="submit">Apply</button>
+        <button type="reset">Reset</button>
+    </div>
+</form>
+<script>
+    $(function () {
+        $("#issueDate").datepicker({
+            dateFormat: "dd-M-yy",
+            minDate: 0 // This will disable past dates and include today
+        });
+    });
+</script>
+</body>
+</html>
